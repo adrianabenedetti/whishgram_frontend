@@ -58,7 +58,7 @@ const SignUp = () => {
           <Card className="shadow">
             <Card.Body>
               <div className="mb-3 mt-md-4">
-                <h2 className="fw-bold mb-2 text-center">Login</h2>
+                <h2 className="fw-bold mb-2 text-center">Sign up</h2>
                 <div className="mb-3"></div>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group className="mb-3">
