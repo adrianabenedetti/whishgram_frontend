@@ -11,7 +11,6 @@ const Login = () => {
     const [formData, setFormData] = useState(
         initialStateData
       );
-      console.log(formData);
 
       const handleChange = (e) => {
         setFormData((prev) => ({

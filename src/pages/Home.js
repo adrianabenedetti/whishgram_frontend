@@ -7,9 +7,10 @@ import Button from 'react-bootstrap/Button';
 
 const Home = () => {
   return (
+    <>
     <Navbar expand="lg" className="bg-body-tertiary shadow">
       <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand href="#home">Wishgram</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="">
@@ -19,6 +20,10 @@ const Home = () => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    <Container>
+    <hr class="dropdown-divider"></hr>
+    </Container>
+    </>
   )
 }
 
