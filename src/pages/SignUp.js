@@ -10,8 +10,8 @@ const SignUp = () => {
     userName: "",
     email: "",
     password: "",
+    confirmPassword:""
   });
-  console.log(formData);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -20,24 +20,35 @@ const SignUp = () => {
     }));
   };
 
+  const checkPassword = () => {
+    if(formData.password === formData.confirmPassword) {
+      return true
+    }
+    return false
+
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const req = await fetch("http://localhost:5050/users/new", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const user = await req.json();
-      if (req.ok) {
-        localStorage.setItem("loggedIn", JSON.stringify(user));
+    if (checkPassword()) {
+      try {
+        const req = await fetch("http://localhost:5050/users/new", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+        const user = await req.json();
+        if (req.ok) {
+          localStorage.setItem("loggedIn", JSON.stringify(user));
+        }
+        resetFields();
+        return user;
+      } catch (error) {
+        console.log(error);
       }
-      resetFields();
-      return user;
-    } catch (error) {
-      console.log(error);
+    } else {
+      return console.log("error")
     }
   };
 
@@ -48,6 +59,7 @@ const SignUp = () => {
       userName: "",
       email: "",
       password: "",
+      confirmPassword:""
     });
   };
 
@@ -106,6 +118,16 @@ const SignUp = () => {
                       name="password"
                       onChange={handleChange}
                       value={formData.password}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      name="confirmPassword"
+                      onChange={handleChange}
+                      value={formData.confirmPassword}
                     />
                   </Form.Group>
                   <Button variant="primary" type="submit" className='text-align-center'>

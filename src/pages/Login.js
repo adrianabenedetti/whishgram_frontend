@@ -2,6 +2,7 @@ import React from 'react'
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import {motion} from 'framer-motion';
 
 const Login = () => {
     const initialStateData = {
@@ -76,17 +77,17 @@ const Login = () => {
                     className="mb-3"
                     controlId="formBasicCheckbox"
                   ></Form.Group>
-                  <div className="d-grid">
+                  <motion.div className="d-grid" whileHover={{scale:1.1}} whileTap={{scale:0.9}}>
                     <Button variant="primary" type="submit">
                       Login
                     </Button>
-                  </div>
+                  </motion.div>
                 </Form>
                 <div className="mt-3">
                   <p className="mb-0  text-center">
                     Don't have an account?{" "}
                     <Link to="/SignUp">
-                      <span className="text-primary fw-bold">Sign Up</span>
+                      <motion.span className="text-primary fw-bold" whileHover={{scale:1.1}} whileTap={{scale:0.9}}>Sign Up</motion.span>
                     </Link>
                   </p>
                 </div>

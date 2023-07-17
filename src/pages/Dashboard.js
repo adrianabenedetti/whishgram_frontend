@@ -7,11 +7,11 @@ import Button from "react-bootstrap/button";
 import { useState, useEffect } from "react";
 import decoder from "../utilities/decoder";
 import { ListButton } from "../components/ListButton";
+import {useParams, useNavigate} from 'react-router-dom';
 
 const Dashboard = () => {
   const [lists, setLists] = useState([]);
   const decodedSession = decoder();
-  console.log(lists)
   useEffect(() => {
      getLists(decodedSession.id).then((response) => {
       setLists(response);
@@ -34,7 +34,17 @@ const Dashboard = () => {
       console.log(error);
     }
   };
+/*     const navigate = useNavigate();
 
+    const handleSubmit = async (listId) => {
+      const {listId} = useParams()
+      try {
+        const response = await fetch(`http://localhost:5050/products/${id}`);
+        return navigate("/Products")
+      } catch (error) {
+        console.log(error)
+      }
+    } */
   return (
     <>
     <Navbar className="bg-body-tertiary">
@@ -68,7 +78,7 @@ const Dashboard = () => {
     </Navbar> 
     <Container>
       {lists && lists.map((list) => {
-        return <ListButton list= {list} />
+        return <ListButton list= {list}/>
       })}
 
     </Container>
