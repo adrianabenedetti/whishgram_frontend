@@ -1,30 +1,35 @@
 import React from 'react';
 import { useState } from 'react';
-import Form from 'react-bootstrap/form';
-import Button from 'react-bootstrap/button';
-import Container from 'react-bootstrap/container';
+import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 
 
 const SignUp = () => {
-    
-    const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
-        userName: "",
-        email: "",
-        password: ""
-    });
-    console.log(formData);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    userName: "",
+    email: "",
+    password: "",
+    confirmPassword:""
+  });
 
-    const handleChange = (e) => {
-        setFormData((prev) => ({
-            ...prev,
-            [e.target.name]: e.target.value
-        }));
-    }; 
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
+  const checkPassword = () => {
+    if(formData.password === formData.confirmPassword) {
+      return true
+    }
+    return false
+
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (checkPassword()) {
       try {
         const req = await fetch("http://localhost:5050/users/new", {
           method: "POST",
@@ -37,78 +42,103 @@ const SignUp = () => {
         if (req.ok) {
           localStorage.setItem("loggedIn", JSON.stringify(user));
         }
-        resetFields()
+        resetFields();
         return user;
       } catch (error) {
         console.log(error);
       }
-    }; 
-
-    const resetFields = () => {
-        setFormData({
-            firstName: "",
-            lastName: "",
-            userName: "",
-            email: "",
-            password: ""
-        })
+    } else {
+      return console.log("error")
     }
+  };
+
+  const resetFields = () => {
+    setFormData({
+      firstName: "",
+      lastName: "",
+      userName: "",
+      email: "",
+      password: "",
+      confirmPassword:""
+    });
+  };
 
   return (
-    <Container class="d-flex flex-column align-items-center">
-        <h3 className='pt-5 mt-5'>Sign Up</h3>
-      <Form className='w-25 pt-3 mt-3 align-items-center' onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label>First Name</Form.Label>
-          <Form.Control
-            type="text"
-            name="firstName"
-            onChange={handleChange}
-            value={formData.firstName}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Last Name</Form.Label>
-          <Form.Control
-            type="text"
-            name="lastName"
-            onChange={handleChange}
-            value={formData.lastName}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            name="userName"
-            onChange={handleChange}
-            value={formData.userName}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            name="email"
-            onChange={handleChange}
-            value={formData.email}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            name="password"
-            onChange={handleChange}
-            value={formData.password}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+    <Container>
+      <Row className="vh-100 d-flex justify-content-center align-items-center">
+        <Col md={8} lg={6} xs={12}>
+          <Card className="shadow">
+            <Card.Body>
+              <div className="mb-3 mt-md-4">
+                <h2 className="fw-bold mb-2 text-center">Sign up</h2>
+                <div className="mb-3"></div>
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>First Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="firstName"
+                      onChange={handleChange}
+                      value={formData.firstName}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Last Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="lastName"
+                      onChange={handleChange}
+                      value={formData.lastName}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="userName"
+                      onChange={handleChange}
+                      value={formData.userName}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter email"
+                      name="email"
+                      onChange={handleChange}
+                      value={formData.email}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      name="password"
+                      onChange={handleChange}
+                      value={formData.password}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      name="confirmPassword"
+                      onChange={handleChange}
+                      value={formData.confirmPassword}
+                    />
+                  </Form.Group>
+                  <Button variant="primary" type="submit" className='text-align-center'>
+                    Submit
+                  </Button>
+                </Form>
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </Container>
   );
 }
