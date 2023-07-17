@@ -8,21 +8,40 @@ import { useState, useEffect } from "react";
 import decoder from "../utilities/decoder";
 import { ListButton } from "../components/ListButton";
 import {useParams, useNavigate} from 'react-router-dom';
+import {nanoid} from 'nanoid'
+
 
 const Dashboard = () => {
   const [lists, setLists] = useState([]);
+
+  const [products, setProducts] = useState([]);
+
+  const [showDiv, setShowDiv] = useState([])
+  console.log("showDiv", showDiv)
+
   const decodedSession = decoder();
+
   useEffect(() => {
      getLists(decodedSession.id).then((response) => {
       setLists(response);
-    }); 
+    }).then(() => {initShowDiv()});
   }, []);
+  console.log(lists)
+  console.log(products)
 
+  const initShowDiv = () => {
+    let arr = new Array(lists.length)
+    for (let index = 0; index < arr.length; index++) {
+      arr[index] = false
+    }
+    setShowDiv(arr)
+    console.log("init terminato") 
+  }
 
+  const session = localStorage.getItem("session");
   const getLists = async (id) => {
     try {
-      const session = localStorage.getItem("session");
-      const response = await fetch(`http://localhost:5050/lists/${id}`, {
+      const response = await fetch(`http://localhost:5050/lists/byUserId/${id}`, {
         headers: {
           authorization: session,
           "Content-Type": "application/json",
@@ -34,17 +53,38 @@ const Dashboard = () => {
       console.log(error);
     }
   };
-/*     const navigate = useNavigate();
 
-    const handleSubmit = async (listId) => {
-      const {listId} = useParams()
-      try {
-        const response = await fetch(`http://localhost:5050/products/${id}`);
-        return navigate("/Products")
-      } catch (error) {
-        console.log(error)
+/* 
+  const getProducts = async (listId) => {
+    try {
+      const data = await fetch(`http://localhost:5050/products/${listId}`, {
+        headers: {
+          authorization: session,
+          "Content-Type": "application/json",
+        }
+      }) 
+      const response = await data.json();
+      setProducts(response.products)
+    } catch (error) {
+      console.log(error);
+    }
+  } */
+
+  const handleClick = (index) => {
+      console.log(lists[index].products)
+      toggleDiv(index)
+  }
+
+  const toggleDiv = (index) => {
+    let arr = [...showDiv]
+    for (let i = 0; i < arr.length; i++) {
+      if(i === index){ 
+        arr[i] = !showDiv[i]
       }
-    } */
+    }
+    setShowDiv(arr)
+  }
+
   return (
     <>
     <Navbar className="bg-body-tertiary">
@@ -77,8 +117,15 @@ const Dashboard = () => {
       </Container>
     </Navbar> 
     <Container>
-      {lists && lists.map((list) => {
-        return <ListButton list= {list}/>
+      {lists && lists.map((list, index) => {
+        return (
+          <div key={nanoid()}>
+          <Button onClick={()=> handleClick(index)}>
+            {list.title}
+          </Button>
+          { showDiv && showDiv[index] && <div>Questo Campetella si comporta male</div>}
+          </div>
+        )
       })}
 
     </Container>
