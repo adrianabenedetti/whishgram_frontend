@@ -1,0 +1,19 @@
+.footer-07 {
+    background-color: rgb(40, 38, 34);
+    color: rgb(234, 234, 234);
+}
+
+.menu a {
+    color: rgb(234, 234, 234);
+    text-decoration: none;
+    padding: 1rem
+}
+.menuSocial a{
+    color: rgb(234, 234, 234);
+    text-decoration: none;
+    padding: 1rem
+}
+
+.copyright {
+    font-size: 10pt;
+}

@@ -3,6 +3,9 @@ import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import {motion} from 'framer-motion';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Login = () => {
     const initialStateData = {
@@ -37,11 +40,11 @@ const Login = () => {
             localStorage.setItem("session", response.accessToken);
             navigate("/Dashboard")
           } else {
-            console.log(response.statusCode)
+            toast.error("Login failed ❌: invalid email or password")
           }
           resetFields();
         } catch (error) {
-          console.log(error);
+          toast.error(Error)
         }
       };
 
@@ -52,11 +55,13 @@ const Login = () => {
         });
       };
   return (
-    <Container>
+    <>
+    <Container> 
       <Row className="vh-100 d-flex justify-content-center align-items-center">
         <Col md={8} lg={6} xs={12}>
           <Card className="shadow">
             <Card.Body>
+              
               <div className="mb-3 mt-md-4">
                 <h2 className="fw-bold mb-2 text-center">Login</h2>
                 <div className="mb-3"></div>
@@ -97,6 +102,7 @@ const Login = () => {
         </Col>
       </Row>
     </Container>
+    </>
   );
 }
 

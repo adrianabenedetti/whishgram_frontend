@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const SignUp = () => {
@@ -25,7 +27,6 @@ const SignUp = () => {
       return true
     }
     return false
-
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,10 +46,10 @@ const SignUp = () => {
         resetFields();
         return user;
       } catch (error) {
-        console.log(error);
+        toast.warning("Please check you info ☝️")
       }
     } else {
-      return console.log("error")
+      return toast.warning("Passwords do not match 🚫")
     }
   };
 
