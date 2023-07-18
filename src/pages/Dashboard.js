@@ -157,9 +157,6 @@ const Dashboard = () => {
                 </Col>
               );
             })}
-{/*           {showDiv && showDiv[index] && (
-            <div>Questo Campetella si comporta male 😈</div>
-          )} */}
         </Row>
       </Container>
     </> 
