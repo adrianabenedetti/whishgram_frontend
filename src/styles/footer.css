@@ -1,8 +1,6 @@
 .footer-07 {
-    background-color: rgb(68, 67, 65);
+    background-color: rgb(40, 38, 34);
     color: rgb(234, 234, 234);
-
-
 }
 
 .menu a {
@@ -10,7 +8,12 @@
     text-decoration: none;
     padding: 1rem
 }
-.menu i {
+.menuSocial a{
     color: rgb(234, 234, 234);
-    text-decoration: none; 
+    text-decoration: none;
+    padding: 1rem
+}
+
+.copyright {
+    font-size: 10pt;
 }

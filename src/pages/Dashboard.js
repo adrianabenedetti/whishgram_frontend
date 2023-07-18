@@ -7,7 +7,6 @@ import Button from "react-bootstrap/button";
 import {Row, Col} from "react-bootstrap"
 import { useState, useEffect } from "react";
 import decoder from "../utilities/decoder";
-
 import { useParams, useNavigate } from "react-router-dom";
 import { nanoid } from "nanoid";
 import Card from "react-bootstrap/Card";
@@ -158,12 +157,12 @@ const Dashboard = () => {
                 </Col>
               );
             })}
-          {showDiv && showDiv[index] && (
+{/*           {showDiv && showDiv[index] && (
             <div>Questo Campetella si comporta male 😈</div>
-          )}
+          )} */}
         </Row>
       </Container>
-    </>
+    </> 
   );
 };
 
