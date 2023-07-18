@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
+import Footer from '../components/Footer';
 
 const Home = () => {
   return (
@@ -23,6 +24,7 @@ const Home = () => {
     <Container>
     <hr class="dropdown-divider"></hr>
     </Container>
+    <Footer />
     </>
   )
 }
