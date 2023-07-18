@@ -12,6 +12,8 @@ import { nanoid } from "nanoid";
 import Card from "react-bootstrap/Card";
 import Stack from 'react-bootstrap/Stack';
 import {motion} from 'framer-motion';
+import {AiFillPlusCircle} from 'react-icons/ai'
+import NewListModal from "../components/NewListModal";
 
 
 const Dashboard = () => {
@@ -21,6 +23,8 @@ const Dashboard = () => {
   const [products, setProducts] = useState([]);
 
   const [showDiv, setShowDiv] = useState([]);
+
+  const [modalShow, setModalShow] = React.useState(false);
 
   const session = localStorage.getItem("session");
 
@@ -56,19 +60,10 @@ const Dashboard = () => {
     }
   };
 
-  const handleClick = (index) => {
-    toggleDiv(index);
+  const handleClick = () => {
+    navigate("/Products");
   };
 
-  const toggleDiv = (index) => {
-    let arr = [...showDiv];
-    for (let i = 0; i < arr.length; i++) {
-      if (i === index) {
-        arr[i] = !showDiv[i];
-      }
-    }
-    setShowDiv(arr);
-  };
 
   const logOut = () => {
     localStorage.clear();
@@ -87,6 +82,18 @@ const Dashboard = () => {
       border: 'none',
       borderRadius: '20px',
       textAlign: 'center'
+    },
+    img: {
+      width: '30%',
+      objectFit: 'cover'
+    },
+    plusButton: {
+      position: "fixed",
+      fontSize: '7rem',
+      bottom: '0',
+      right: '3',
+      backgroundColor: ' rgb(40, 38, 34);',
+      color: ' rgb(40, 38, 34);'
     }
   }
 
@@ -132,6 +139,12 @@ const Dashboard = () => {
         </Container>
       </Navbar>
       <Container>
+        <>
+        <p style={cardStyle.plusButton}><AiFillPlusCircle onClick={() => setModalShow(true)} /></p> {/* pulsante creazione lista */}
+        <NewListModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
         <Row className="d-flex py-5 justify-content-center">
           {lists &&
             lists.map((list, index) => {
@@ -140,6 +153,13 @@ const Dashboard = () => {
                   <Stack direction="horizontal" gap={2}>
                     <div key={nanoid()}>
                       <Card className="shadow" style={cardStyle.card}>
+                        {list.products.map((product, index) => {
+                           if(index<=6) {
+                          return (
+                            <img style={cardStyle.img} src={product.img} />
+                            
+                          )}
+                        })}
                         <Card.Body className="d-flex justify-content-center ">
                           <motion.div whileTap={{ scale: 0.9 }}>
                             <Button
@@ -158,6 +178,7 @@ const Dashboard = () => {
               );
             })}
         </Row>
+        </>
       </Container>
     </> 
   );
