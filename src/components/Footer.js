@@ -12,7 +12,7 @@ const Footer = () => {
 			<div className="container">
 				<div className="row justify-content-center">
 					<div className="col-md-12 text-center py-4">
-						<h2 className="footer-heading py-2">Wishgram</h2>
+						<h2 className="footer-heading py-2">WISHGRAM</h2>
 						<p className="menu py-1">
 							<a href="#">Home</a>
 							<a href="#">About</a>
