@@ -73,7 +73,8 @@ const Dashboard = () => {
   const cardStyle = {
     card: {
       width:'16rem', 
-      height:'20rem'
+      height:'20rem',
+      marginTop: '1rem'
     },
     button: {
       width:'7rem', 
@@ -91,9 +92,9 @@ const Dashboard = () => {
       position: "fixed",
       fontSize: '7rem',
       bottom: '0',
-      right: '3',
-      backgroundColor: ' rgb(40, 38, 34);',
-      color: ' rgb(40, 38, 34);'
+      right: '2rem',
+      color: ' rgb(40, 38, 34)',
+      zIndex: 10
     }
   }
 
@@ -140,7 +141,7 @@ const Dashboard = () => {
       </Navbar>
       <Container>
         <>
-        <p style={cardStyle.plusButton}><AiFillPlusCircle onClick={() => setModalShow(true)} /></p> {/* pulsante creazione lista */}
+        <p><AiFillPlusCircle style={cardStyle.plusButton} onClick={() => setModalShow(true)} /></p> {/* pulsante creazione lista */}
         <NewListModal
         show={modalShow}
         onHide={() => setModalShow(false)}

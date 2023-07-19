@@ -20,6 +20,10 @@ const NewListModal = (props) => {
         }
         return false;
     }
+    const exitModal = (props) => {
+        props.onHide()
+        window.location.reload(false)
+    }
 
     const newlist = async (e) => {
         e.preventDefault();
@@ -27,9 +31,9 @@ const NewListModal = (props) => {
     if (checkTitle()) {
       try {
         const bodyContent = {
-            title: title
+            title: title,
         }
-        const req = await fetch(`http://localhost:5050/lists/new/${id}`, {
+        const data = await fetch(`http://localhost:5050/lists/new/${id}`, {
           method: "POST",
           headers: {
             authorization: session,
@@ -37,8 +41,10 @@ const NewListModal = (props) => {
           },
           body: JSON.stringify(bodyContent),
         });
-        const list = await req.json();
+        const response = await data.json();
+        toast.success("List saved ✅")
       } catch (error) {
+        console.log(error)
         toast.error("Could not save your list, try again 🍀");
       }
     } else {
@@ -102,7 +108,7 @@ const NewListModal = (props) => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           style={modalStyle.button}
-          onClick={props.onHide}
+          onClick={() => exitModal(props)}
         >
           Close
         </motion.button>
