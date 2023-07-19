@@ -1,9 +1,14 @@
-import React from 'react'
+import React from 'react';
+import NavbarReservedArea from '../components/NavbarReservedArea';
+import Footer from '../components/Footer';
 
 const Products = () => {
 
   return (
-    <div>Products</div>
+    <>
+    <NavbarReservedArea />
+    <Footer />
+    </>
   )
 }
 

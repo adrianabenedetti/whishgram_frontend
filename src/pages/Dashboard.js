@@ -65,7 +65,6 @@ const Dashboard = () => {
 
   const deleteList = async (index) => {
     try {
-      console.log(lists[index]);
       const id = lists[index]._id;
       const data = await fetch(`http://localhost:5050/lists/delete/${id}`, {
         method: "DELETE",
@@ -83,12 +82,12 @@ const Dashboard = () => {
 
   const cardStyle = {
     card: {
-      width: "16rem",
-      height: "20rem",
+      width: "20rem",
+      height: "30rem",
       marginTop: "1rem",
     },
     button: {
-      width: "7rem",
+      width: "8rem",
       height: "2.5rem",
       backgroundColor: "rgb(40, 38, 34)",
       border: "none",
@@ -106,8 +105,11 @@ const Dashboard = () => {
       margin: "0.3rem",
     },
     img: {
-      width: "30%",
+      width: "50%",
+      height: "50%",
       objectFit: "cover",
+      padding: "1rem",
+      paddingBottom: "0"
     },
     plusButton: {
       position: "fixed",
@@ -131,7 +133,7 @@ const Dashboard = () => {
     <>
     <NavbarReservedArea />
       <Container>
-        <>
+        <h4 className="pt-5">Your Lists:</h4>
           <p>
             <AiFillPlusCircle
               style={cardStyle.plusButton}
@@ -148,6 +150,7 @@ const Dashboard = () => {
                     <Stack direction="horizontal" gap={2}>
                       <div key={nanoid()}>
                         <Card className="shadow" style={cardStyle.card}>
+                          <Card.Body>
                           {list.products.map((product, index) => {
                             if (index <= 6) {
                               return (
@@ -155,6 +158,7 @@ const Dashboard = () => {
                               );
                             }
                           })}
+                          </Card.Body>
                           <Card.Body className="d-flex justify-content-center align-item-center ">
                             <motion.div
                               className="d-flex align-item-end"
@@ -165,7 +169,7 @@ const Dashboard = () => {
                                 style={cardStyle.button}
                                 onClick={() => handleClick(index)}
                               >
-                                {list.title}
+                                {list.title.toUpperCase()}
                               </Button>
                             </motion.div>
                             <motion.div
@@ -187,7 +191,7 @@ const Dashboard = () => {
                 );
               })}
           </Row>
-        </>
+        
       </Container>
       <Footer />
     </>
