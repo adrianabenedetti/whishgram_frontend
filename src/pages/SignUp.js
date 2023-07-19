@@ -78,7 +78,7 @@ const SignUp = () => {
       borderRadius: "20px",
       textAlign: "center",
       fontSize: "15pt",
-      color: "rgb(234, 234, 234);",
+      color: "rgb(234, 234, 234)",
       marginLeft: "0.5rem",
     },
     link: {
