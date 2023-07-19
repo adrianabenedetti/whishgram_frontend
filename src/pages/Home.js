@@ -8,18 +8,34 @@ import Footer from '../components/Footer';
 
 const Home = () => {
 
+  const button = {
+    button: {
+      backgroundColor:'rgb(40, 38, 34)',
+      width:'6rem', 
+      height:'3rem', 
+      border: 'none',
+      borderRadius: '20px',
+      textAlign: 'center',
+      fontSize: '12pt',
+      color: 'rgb(234, 234, 234);',
+      marginLeft: '0.5rem'
+    }
+  }
+
   return (
     <>
     <Navbar expand="lg" className="bg-body-tertiary shadow">
       <Container>
-        <Navbar.Brand style={{fontSize:'20pt', fontWeight:'bold'}} href="#home">WISHGRAM</Navbar.Brand>
+        <Navbar.Brand style={{fontSize:'25pt', fontWeight:'bold', color:'rgb(40, 38, 34)'}} href="#home">WISHGRAM</Navbar.Brand>
+        <div>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Collapse id="basic-navbar-nav" >
           <Nav className="d-flex justify-content-end">
-            <Link to= "/SignUp"><Button className="my-2 mx-3" variant="dark">Sign up</Button></Link>
-            <Link to= "/Login"><Button className="my-2 mx-3" variant="dark">Login</Button></Link>
+            <Link to= "/SignUp"><Button style={button.button}>Sign up</Button></Link>
+            <Link to= "/Login"><Button style={button.button} >Login</Button></Link>
           </Nav>
         </Navbar.Collapse>
+        </div>
       </Container>
     </Navbar>
     <Container>
