@@ -12,9 +12,11 @@ import { nanoid } from "nanoid";
 import Card from "react-bootstrap/Card";
 import Stack from 'react-bootstrap/Stack';
 import {motion} from 'framer-motion';
-import {AiFillPlusCircle} from 'react-icons/ai'
+import {AiFillPlusCircle, AiOutlineDelete} from 'react-icons/ai'
 import NewListModal from "../components/NewListModal";
-
+import Footer from "../components/Footer"
+import { toast } from 'react-toastify';
+import NavbarReservedArea from "../components/NavbarReservedArea";
 
 const Dashboard = () => {
   //useStates
@@ -42,21 +44,36 @@ const Dashboard = () => {
     setShowDiv(arr);
   };
 
+  const reloadPage = () => {
+    window.location.reload(false);
+  };
+
   const getLists = async (id) => {
     try {
-      const response = await fetch(
-        `http://localhost:5050/lists/byUserId/${id}`,
-        {
-          headers: {
-            authorization: session,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await response.json();
-      return data.lists;
+      const data = await fetch(`http://localhost:5050/lists/byUserId/${id}`, {
+        headers: {
+          authorization: session,
+          "Content-Type": "application/json",
+        },
+      });
+      const response = await data.json();
+      return response.lists;
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const deleteList = async (index) => {
+    try {
+      console.log(lists[index]);
+      const id = lists[index]._id;
+      const data = await fetch(`http://localhost:5050/lists/delete/${id}`, {
+        method: "DELETE",
+      });
+      const response = await data.json();
+      reloadPage();
+    } catch (error) {
+      toast.error("Couldn't delete list ❗️ ");
     }
   };
 
@@ -64,124 +81,116 @@ const Dashboard = () => {
     navigate("/Products");
   };
 
-
-  const logOut = () => {
-    localStorage.clear();
-    navigate("/");
-  };
-
   const cardStyle = {
     card: {
-      width:'16rem', 
-      height:'20rem',
-      marginTop: '1rem'
+      width: "16rem",
+      height: "20rem",
+      marginTop: "1rem",
     },
     button: {
-      width:'7rem', 
-      height:'3rem', 
-      backgroundColor:'#C0C0C0',
-      border: 'none',
-      borderRadius: '20px',
-      textAlign: 'center'
+      width: "7rem",
+      height: "2.5rem",
+      backgroundColor: "rgb(40, 38, 34)",
+      border: "none",
+      borderRadius: "20px",
+      textAlign: "center",
+      margin: "0.3rem",
+    },
+    deleteButton: {
+      width: "2.5rem",
+      height: "2.5rem",
+      backgroundColor: "rgb(40, 38, 34)",
+      border: "none",
+      borderRadius: "20px",
+      textAlign: "center",
+      margin: "0.3rem",
     },
     img: {
-      width: '30%',
-      objectFit: 'cover'
+      width: "30%",
+      objectFit: "cover",
     },
     plusButton: {
       position: "fixed",
-      fontSize: '7rem',
-      bottom: '0',
-      right: '2rem',
-      color: ' rgb(40, 38, 34)',
-      zIndex: 10
-    }
-  }
+      fontSize: "7rem",
+      top: "7rem",
+      right: "2rem",
+      color: " rgb(40, 38, 34)",
+      zIndex: 10,
+    },
+  };
 
   //useEffects
   useEffect(() => {
-    getLists(decodedSession.id).then((response) => {
-      setLists(response);
-      initShowDiv(response.length);
+    getLists(decodedSession.id).then((data) => {
+      setLists(data);
+      initShowDiv(data.length);
     });
   }, []);
 
   return (
     <>
-      <Navbar className="bg-body-tertiary">
-        <Container>
-          <Navbar.Brand href="#home">Wishgram</Navbar.Brand>
-          <Navbar.Toggle />
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form>
-          <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text className="px-2">Welcome,</Navbar.Text>
-            <NavDropdown title="Username" id="basic-nav-dropdown">
-              <NavDropdown.Item onClick={logOut} href="#action/3.1">
-                Log out
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+    <NavbarReservedArea />
       <Container>
         <>
-        <p><AiFillPlusCircle style={cardStyle.plusButton} onClick={() => setModalShow(true)} /></p> {/* pulsante creazione lista */}
-        <NewListModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
-        <Row className="d-flex py-5 justify-content-center">
-          {lists &&
-            lists.map((list, index) => {
-              return (
-                <Col md={6} lg={3} xs={12}>
-                  <Stack direction="horizontal" gap={2}>
-                    <div key={nanoid()}>
-                      <Card className="shadow" style={cardStyle.card}>
-                        {list.products.map((product, index) => {
-                           if(index<=6) {
-                          return (
-                            <img style={cardStyle.img} src={product.img} />
-                            
-                          )}
-                        })}
-                        <Card.Body className="d-flex justify-content-center ">
-                          <motion.div whileTap={{ scale: 0.9 }}>
-                            <Button
-                              className="d-flex"
-                              style={cardStyle.button}
-                              onClick={() => handleClick(index)}
+          <p>
+            <AiFillPlusCircle
+              style={cardStyle.plusButton}
+              onClick={() => setModalShow(true)}
+            />
+          </p>{" "}
+          {/* pulsante creazione lista */}
+          <NewListModal show={modalShow} onHide={() => setModalShow(false)} />
+          <Row className="d-flex py-5 justify-content-center">
+            {lists &&
+              lists.map((list, index) => {
+                return (
+                  <Col md={6} lg={3} xs={12}>
+                    <Stack direction="horizontal" gap={2}>
+                      <div key={nanoid()}>
+                        <Card className="shadow" style={cardStyle.card}>
+                          {list.products.map((product, index) => {
+                            if (index <= 6) {
+                              return (
+                                <img style={cardStyle.img} src={product.img} />
+                              );
+                            }
+                          })}
+                          <Card.Body className="d-flex justify-content-center align-item-center ">
+                            <motion.div
+                              className="d-flex align-item-end"
+                              whileTap={{ scale: 0.9 }}
                             >
-                              {list.title}
-                            </Button>
-                          </motion.div>
-                        </Card.Body>
-                      </Card>
-                    </div>
-                  </Stack>
-                </Col>
-              );
-            })}
-        </Row>
+                              <Button
+                                className="d-flex justify-content-center"
+                                style={cardStyle.button}
+                                onClick={() => handleClick(index)}
+                              >
+                                {list.title}
+                              </Button>
+                            </motion.div>
+                            <motion.div
+                              className="d-flex"
+                              whileTap={{ scale: 0.9 }}
+                            >
+                              <Button
+                                onClick={() => deleteList(index)}
+                                style={cardStyle.deleteButton}
+                              >
+                                <AiOutlineDelete />
+                              </Button>
+                            </motion.div>
+                          </Card.Body>
+                        </Card>
+                      </div>
+                    </Stack>
+                  </Col>
+                );
+              })}
+          </Row>
         </>
       </Container>
-    </> 
+      <Footer />
+    </>
   );
 };
 
