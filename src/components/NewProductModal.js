@@ -16,6 +16,7 @@ const NewListModal = (props) => {
 
   const [product, setProduct] = useState({})
 
+
   const createProduct = async () => {
     const contentBody = {
       url: formData.url,
@@ -106,10 +107,10 @@ const NewListModal = (props) => {
       })
       const response = await data.json();
       if(response.statusCode === 200) {
-        toast.success("Product saved")
+        toast.success("Product saved ✅")
       }
     } catch (error) {
-      toast.error("There has been an error")
+      toast.error("There has been an error ❌")
     }
   }
     
@@ -137,6 +138,9 @@ const NewListModal = (props) => {
       color: "rgb(40, 38, 34)",
       fontWeight: "bold",
     },
+    img: {
+      width: '150px'
+    }
   };
 
   return (
@@ -169,9 +173,8 @@ const NewListModal = (props) => {
             />
           </Form.Group>
         </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <motion.button
+        <div className="d-flex justify-content-center">
+        <motion.button 
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           style={modalStyle.button}
@@ -179,18 +182,22 @@ const NewListModal = (props) => {
         >
           Send
         </motion.button>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
         <Container>
           <Row>
         {images && images.map((image, index) =>{
-          if(index <= 5) {
+          if(index <= 20) {
           return (
-              <Col>
+              <Col md={8} lg={4} xs={12} >
               <button onClick={() => saveImage(index)}>
-              <img src= {image}/>
+              <img style={modalStyle.img} src= {image}/>
               </button>
               </Col>
           )}
         })}
+        <div className="d-flex justify-content-center mt-3">
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -199,6 +206,7 @@ const NewListModal = (props) => {
         >
           Close
         </motion.button>
+        </div>
         </Row>
         </Container>
       </Modal.Footer>

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -34,13 +34,16 @@ const SignUp = () => {
     e.preventDefault();
     if (checkPassword()) {
       try {
-        const req = await fetch("http://localhost:5050/users/new", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+        const req = await fetch(
+          `${process.env.REACT_APP_SERVER_BASE_URL}/users/new`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
         const user = await req.json();
         if (req.ok) {
           localStorage.setItem("loggedIn", JSON.stringify(user));
@@ -202,13 +205,13 @@ const SignUp = () => {
                   </motion.div>
                 </Form>
                 <div className="mt-3">
-                    <p className="mb-0  text-center">
-                      Already have an account?{" "}
-                      <Link style={signupForm.link} to="/Login">
-                        <span>Login</span>
-                      </Link>
-                    </p>
-                  </div>
+                  <p className="mb-0  text-center">
+                    Already have an account?{" "}
+                    <Link style={signupForm.link} to="/Login">
+                      <span>Login</span>
+                    </Link>
+                  </p>
+                </div>
               </div>
             </Card.Body>
           </Card>

@@ -39,9 +39,7 @@ const Products = () => {
     setShowDiv(arr);
   };
 
-  const reloadPage = () => {
-    window.location.reload(false);
-  };
+
 
   const getProducts = async () => { 
     try {
@@ -58,6 +56,26 @@ const Products = () => {
     }
   }
 
+
+  const deleteProduct = async (index) => {
+    try {
+      const id = products[index]._id;
+      console.log(id)
+      const data = await fetch(`http://localhost:5050/products/delete/${id}`, {
+        method: "DELETE",
+      });
+      const response = await data.json();
+      reloadPage();
+    } catch (error) {
+      toast.error("Couldn't delete list ❗️ ");
+    }
+  };
+
+  const reloadPage = () => {
+    window.location.reload(false);
+  };
+
+
   //useEffect
   useEffect(() => {
     getProducts().then((data) => {
@@ -68,13 +86,13 @@ const Products = () => {
 
   const cardStyle = {
     card: {
-      width: "20rem",
-      height: "30rem",
+      width: "18rem",
+      height: "25rem",
       marginTop: "1rem",
+      marginRight:"30rem"
     },
     button: {
-      width: "8rem",
-      height: "2.5rem",
+      height: '2.5rem',
       backgroundColor: "rgb(40, 38, 34)",
       border: "none",
       borderRadius: "20px",
@@ -91,11 +109,11 @@ const Products = () => {
       margin: "0.3rem",
     },
     img: {
-      width: "50%",
-      height: "50%",
+      width: "200px",
+      height: "170px",
       objectFit: "cover",
       padding: "1rem",
-      paddingBottom: "0"
+      paddingBottom: "0",
     },
     plusButton: {
       position: "fixed",
@@ -105,13 +123,16 @@ const Products = () => {
       color: " rgb(40, 38, 34)",
       zIndex: 10,
     },
+    a: {
+      textDecoration: 'none'
+    }
   };
 
   return (
     <>
     <NavbarReservedArea />
     <Container>
-    <h4 className="pt-5">Your Products:</h4>
+    <h4 className="pt-5">Products:</h4>
           <p>
             <AiFillPlusCircle
               style={cardStyle.plusButton}
@@ -120,36 +141,38 @@ const Products = () => {
           </p>{" "}
           {/* pulsante creazione lista */}
           <NewProductModal listId= {listId} show={modalShow} onHide={() => setModalShow(false)} />
-          <Row className="d-flex py-5 justify-content-center">
+          <Row className="d-flex py-5 justify-content-center gap-5">
             {products &&
               products.map((product, index) => {
                 return (
                   <Col md={6} lg={3} xs={12}>
-                    <Stack direction="horizontal" gap={2}>
                       <div key={nanoid()}>
                         <Card className="shadow" style={cardStyle.card}>
-                          <Card.Body>
-                                <img style={cardStyle.img} src={product.img} />
+                          <Card.Body className="d-flex justify-content-center">
+                                <motion.img style={cardStyle.img} src={product.img}></motion.img>
                           </Card.Body>
-                          <Card.Body className="d-flex justify-content-center align-item-center ">
+                          <Card.Body className="d-flex justify-content-center align-item-end ">
                             <motion.div
                               className="d-flex align-item-end"
                               whileTap={{ scale: 0.9 }}
+                              whileHover={{scale: 1.1}}
                             >
+                              <a style={cardStyle.a} href={product.url}  target="_blank">
                               <Button
                                 className="d-flex justify-content-center"
                                 style={cardStyle.button}
-                                // onClick={() => handleClick(index)} mettere url
                               >
                                 {product.title.toUpperCase()}
                               </Button>
+                              </a>
                             </motion.div>
                             <motion.div
                               className="d-flex"
                               whileTap={{ scale: 0.9 }}
+                              whileHover={{scale: 1.1}}
                             >
                               <Button
-                                // onClick={() => deleteList(index)}
+                                onClick={() => deleteProduct(index)}
                                 style={cardStyle.deleteButton}
                               >
                                 <AiOutlineDelete />
@@ -158,7 +181,6 @@ const Products = () => {
                           </Card.Body>
                         </Card>
                       </div>
-                    </Stack>
                   </Col>
                 );
               })}

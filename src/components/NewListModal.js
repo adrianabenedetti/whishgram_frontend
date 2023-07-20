@@ -89,7 +89,7 @@ const NewListModal = (props) => {
       </Modal.Header>
       <Modal.Body>
         <Form >
-          <h5>Enter your list name:</h5>
+          <h5>Enter a list title:</h5>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Control type="text" name="title" placeholder="List title" onChange={handleChange} value={title} autoFocus />
           </Form.Group>
