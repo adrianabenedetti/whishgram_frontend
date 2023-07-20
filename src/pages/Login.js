@@ -27,7 +27,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await fetch("http://localhost:5050/login", {
+      const data = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

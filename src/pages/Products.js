@@ -43,7 +43,7 @@ const Products = () => {
 
   const getProducts = async () => { 
     try {
-      const data = await fetch(`http://localhost:5050/products/${listId}`, {
+      const data = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/products/${listId}`, {
         headers: {
           authorization: session,
           "Content-Type": "application/json",
@@ -61,7 +61,7 @@ const Products = () => {
     try {
       const id = products[index]._id;
       console.log(id)
-      const data = await fetch(`http://localhost:5050/products/delete/${id}`, {
+      const data = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/products/delete/${id}`, {
         method: "DELETE",
       });
       const response = await data.json();

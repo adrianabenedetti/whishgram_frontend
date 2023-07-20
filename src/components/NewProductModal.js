@@ -23,7 +23,7 @@ const NewListModal = (props) => {
       title: formData.title
     }
     try {
-      const data = await fetch(`http://localhost:5050/products/new/${props.listId}`, {
+      const data = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/products/new/${props.listId}`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -34,7 +34,7 @@ const NewListModal = (props) => {
       if(response.statusCode === 200){
         const productId = response.product._id;
         setProduct(response.product)
-        const data2 = await fetch(`http://localhost:5050/products/scraping/${productId}`);
+        const data2 = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/products/scraping/${productId}`);
         const response2 = await data2.json()
         if(response2.statusCode === 200){
           setImages(response2.result)
@@ -74,7 +74,7 @@ const NewListModal = (props) => {
         const id = decodedSession.id
     if (checkUrl()) {
       try {
-        const req = await fetch(`http://localhost:5050/lists/new/${id}`, {
+        const req = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/lists/new/${id}`, {
           method: "POST",
           headers: {
             authorization: session,
@@ -98,7 +98,7 @@ const NewListModal = (props) => {
       img: images[index]
     }
     try {
-      const data = await fetch(`http://localhost:5050/products/${id}`, {
+      const data = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/products/${id}`, {
         method: 'PATCH',
         headers: {
           "Content-Type": "application/json",
