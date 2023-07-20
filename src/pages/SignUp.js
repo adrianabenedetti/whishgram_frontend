@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -30,6 +30,9 @@ const SignUp = () => {
     }
     return false;
   };
+
+  const navigate = useNavigate()
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (checkPassword()) {
@@ -48,14 +51,15 @@ const SignUp = () => {
         if (req.ok) {
           localStorage.setItem("loggedIn", JSON.stringify(user));
         }
-        resetFields();
-        return user;
+        toast.success("User registered! 🎉 Please, login")
+        return user 
       } catch (error) {
         toast.warning("Please check you info ☝️");
       }
     } else {
       return toast.warning("Passwords do not match 🚫");
     }
+    resetFields()
   };
 
   const resetFields = () => {
