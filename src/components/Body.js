@@ -60,7 +60,7 @@ const Body = () => {
         <p data-aos="fade-left" style={bodyStyle.pLeft}><b>Step 4:</b> Give your product a name (you can name it whatever you like!) and paste the product's URL.</p>
         </div>
         <div className="d-flex justify-content-end">
-        <p data-aos="fade-right" style={bodyStyle.pRight}><b>Step 5:</b> Press "Send" and let the website works its magic... ✨</p>
+        <p data-aos="fade-right" style={bodyStyle.pRight}><b>Step 5:</b> Press "Send" and let the website work its magic... ✨</p>
         <img data-aos="fade-left" style={bodyStyle.img} src={Screen6} />
         </div>
         <div className="d-flex justify-content-start">

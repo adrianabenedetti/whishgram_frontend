@@ -47,7 +47,7 @@ const Dashboard = () => {
 
   const getLists = async (id) => {
     try {
-      const data = await fetch(`http://localhost:5050/lists/byUserId/${id}`, {
+      const data = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/lists/byUserId/${id}`, {
         headers: {
           authorization: session,
           "Content-Type": "application/json",
@@ -63,7 +63,7 @@ const Dashboard = () => {
   const deleteList = async (index) => {
     try {
       const id = lists[index]._id;
-      const data = await fetch(`http://localhost:5050/lists/delete/${id}`, {
+      const data = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/lists/delete/${id}`, {
         method: "DELETE",
       });
       const response = await data.json();

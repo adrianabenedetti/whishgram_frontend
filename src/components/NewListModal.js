@@ -33,7 +33,7 @@ const NewListModal = (props) => {
         const bodyContent = {
             title: title,
         }
-        const data = await fetch(`http://localhost:5050/lists/new/${id}`, {
+        const data = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/lists/new/${id}`, {
           method: "POST",
           headers: {
             authorization: session,
