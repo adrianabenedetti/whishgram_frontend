@@ -157,10 +157,11 @@ const Dashboard = () => {
                             }
                           })}
                           </Card.Body>
-                          <Card.Body className="d-flex justify-content-center align-item-center ">
+                          <Card.Body className="d-flex justify-content-center align-items-end ">
                             <motion.div
-                              className="d-flex align-item-end"
+                              className="d-flex align-items-end"
                               whileTap={{ scale: 0.9 }}
+                              whileHover={{scale: 1.1}}
                             >
                               <Button
                                 className="d-flex justify-content-center"
@@ -173,6 +174,7 @@ const Dashboard = () => {
                             <motion.div
                               className="d-flex"
                               whileTap={{ scale: 0.9 }}
+                              whileHover={{scale: 1.1}}
                             >
                               <Button
                                 onClick={() => deleteList(index)}
