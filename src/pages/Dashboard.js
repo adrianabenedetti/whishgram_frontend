@@ -1,13 +1,10 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/button";
 import {Row, Col} from "react-bootstrap"
 import { useState, useEffect } from "react";
 import decoder from "../utilities/decoder";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { nanoid } from "nanoid";
 import Card from "react-bootstrap/Card";
 import Stack from 'react-bootstrap/Stack';
@@ -76,8 +73,9 @@ const Dashboard = () => {
     }
   };
 
-  const handleClick = () => {
-    navigate("/Products");
+  const handleClick = (index) => {
+    const listId = lists[index]._id;
+    navigate(`/Products/${listId}`);
   };
 
   const cardStyle = {
@@ -152,7 +150,7 @@ const Dashboard = () => {
                         <Card className="shadow" style={cardStyle.card}>
                           <Card.Body>
                           {list.products.map((product, index) => {
-                            if (index <= 6) {
+                            if (index <= 3) {
                               return (
                                 <img style={cardStyle.img} src={product.img} />
                               );
