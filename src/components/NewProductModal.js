@@ -2,6 +2,9 @@ import React from "react";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import  Container  from "react-bootstrap/Container";
 import { motion } from "framer-motion";
 import decoder from "../utilities/decoder";
 import { toast } from "react-toastify";
@@ -9,6 +12,46 @@ import "react-toastify/dist/ReactToastify.css";
 
 const NewListModal = (props) => {
 
+  const [images, setImages] = useState([])
+
+  const [product, setProduct] = useState({})
+
+  const createProduct = async () => {
+    const contentBody = {
+      url: formData.url,
+      title: formData.title
+    }
+    try {
+      const data = await fetch(`http://localhost:5050/products/new/${props.listId}`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(contentBody)
+      });
+      const response = await data.json();
+      if(response.statusCode === 200){
+        const productId = response.product._id;
+        setProduct(response.product)
+        const data2 = await fetch(`http://localhost:5050/products/scraping/${productId}`);
+        const response2 = await data2.json()
+        if(response2.statusCode === 200){
+          setImages(response2.result)
+        } else {
+          toast.error("No images found")
+        }
+      } else {
+        toast.error("Could not save URL")
+      }
+    } catch (error) {
+      toast.error("error post")
+    }
+  }
+
+  const exitModal = (props) => {
+    props.onHide()
+    window.location.reload(false)
+}
     const initialFormData = {
         url: "",
         title: ""
@@ -47,6 +90,28 @@ const NewListModal = (props) => {
       return toast.warning("Please, enter a valid URL ❗️");
     }
   };
+
+  const saveImage = async (index) => {
+    const id = product._id
+    const bodyContent = {
+      img: images[index]
+    }
+    try {
+      const data = await fetch(`http://localhost:5050/products/${id}`, {
+        method: 'PATCH',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bodyContent)
+      })
+      const response = await data.json();
+      if(response.statusCode === 200) {
+        toast.success("Product saved")
+      }
+    } catch (error) {
+      toast.error("There has been an error")
+    }
+  }
     
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -83,14 +148,14 @@ const NewListModal = (props) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Create a New List
+          Save a New Product
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={newlist}>
-          <h5>Enter your list name:</h5>
+        <Form>
+          <h5>Enter your Product name:</h5>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Control type="text" name="title" placeholder="List title" onChange={handleChange} value={formData.title} autoFocus />
+            <Form.Control type="text" name="title" placeholder="Product name" onChange={handleChange} value={formData.title} autoFocus />
           </Form.Group>
           <h5>Paste your Product URL in here:</h5>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -110,18 +175,32 @@ const NewListModal = (props) => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           style={modalStyle.button}
-          onClick={props.onHide}
+          onClick={createProduct}
         >
-          Save
+          Send
         </motion.button>
+        <Container>
+          <Row>
+        {images && images.map((image, index) =>{
+          if(index <= 5) {
+          return (
+              <Col>
+              <button onClick={() => saveImage(index)}>
+              <img src= {image}/>
+              </button>
+              </Col>
+          )}
+        })}
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           style={modalStyle.button}
-          onClick={props.onHide}
+          onClick={() => exitModal(props)}
         >
           Close
         </motion.button>
+        </Row>
+        </Container>
       </Modal.Footer>
     </Modal>
   );

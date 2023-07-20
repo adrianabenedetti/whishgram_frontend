@@ -119,7 +119,7 @@ const Products = () => {
             />
           </p>{" "}
           {/* pulsante creazione lista */}
-          <NewProductModal show={modalShow} onHide={() => setModalShow(false)} />
+          <NewProductModal listId= {listId} show={modalShow} onHide={() => setModalShow(false)} />
           <Row className="d-flex py-5 justify-content-center">
             {products &&
               products.map((product, index) => {

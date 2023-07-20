@@ -150,7 +150,7 @@ const Dashboard = () => {
                         <Card className="shadow" style={cardStyle.card}>
                           <Card.Body>
                           {list.products.map((product, index) => {
-                            if (index <= 6) {
+                            if (index <= 3) {
                               return (
                                 <img style={cardStyle.img} src={product.img} />
                               );
