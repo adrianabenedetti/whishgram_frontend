@@ -5,6 +5,8 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
+import Body from '../components/Body';
 
 const Home = () => {
 
@@ -39,7 +41,8 @@ const Home = () => {
       </Container>
     </Navbar>
     <Container>
-    <hr class="dropdown-divider"></hr>
+      <Header />
+      <Body />
     </Container>
     <Footer />
     </>
