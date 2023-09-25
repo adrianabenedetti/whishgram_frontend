@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
+import { Col, Row, Container, Card, Form } from "react-bootstrap";
+import Button from 'react-bootstrap/Button';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion";
