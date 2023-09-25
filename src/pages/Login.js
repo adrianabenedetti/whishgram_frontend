@@ -1,5 +1,6 @@
 import React from 'react'
-import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
+import { Col, Row, Container, Card, Form } from "react-bootstrap";
+import Button from 'react-bootstrap/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import {motion} from 'framer-motion';
