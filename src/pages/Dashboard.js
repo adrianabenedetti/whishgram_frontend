@@ -1,6 +1,6 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/button";
+import Button from "react-bootstrap/Button";
 import {Row, Col} from "react-bootstrap"
 import { useState, useEffect } from "react";
 import decoder from "../utilities/decoder";
